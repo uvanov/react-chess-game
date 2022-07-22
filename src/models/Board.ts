@@ -10,7 +10,7 @@ import { Rook } from './figures/Rook';
 export class Board {
   cells: Cell[][] = [];
 
-  InitCells() {
+  public InitCells() {
     for (let rIndex = 0; rIndex < 8; rIndex++) {
       const row: Cell[] = [];
 
@@ -25,11 +25,30 @@ export class Board {
     }
   }
 
-  GetCell(x: number, y: number): Cell {
+  public GetCell(x: number, y: number): Cell {
     return this.cells[y][x];
   }
 
-  AddFigures() {
+  public HighlightCells(selectedCell: Cell | null) {
+    if(selectedCell){
+      for (let rIndex = 0; rIndex < 8; rIndex++) {
+        const row = this.cells[rIndex];
+
+        for (let cIndex = 0; cIndex < 8; cIndex++) {
+          const target = row[cIndex];
+          target.available = !!selectedCell?.figure?.CanMove(target);
+        }
+      }
+    }
+  }
+
+  public GetCopyBoard(): Board {
+    const copyBoard = new Board();
+    copyBoard.cells = this.cells;
+    return copyBoard;
+  }
+
+  public AddFigures() {
     this.AddPawns();
     this.AddKings();
     this.AddQueens();
