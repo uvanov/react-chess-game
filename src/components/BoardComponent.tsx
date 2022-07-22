@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from '../App.module.css';
 import { Board } from '../models/Board';
+import { Cell } from '../models/Cell';
+
 import CellComponent from './CellComponent';
 
 interface BoardProps {
@@ -9,6 +11,15 @@ interface BoardProps {
 }
 
 const BoardComponent: React.FC<BoardProps> = ({ board, setBoard }) => {
+
+  const [selectedCell, setSelectedCell] = useState<Cell | null>(null);
+
+  const click = (cell: Cell) => {
+    if (cell.figure) {
+      setSelectedCell(cell);
+    }
+  };
+
   return (
     <div className={ styles.board }>
       {
@@ -19,6 +30,8 @@ const BoardComponent: React.FC<BoardProps> = ({ board, setBoard }) => {
                   <CellComponent
                     key={ cell.id }
                     cell={ cell }
+                    selected={ cell.x === selectedCell?.x && cell.y === selectedCell?.y }
+                    click={ click }
                   />
                 ))
               }

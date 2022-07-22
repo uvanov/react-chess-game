@@ -24,11 +24,19 @@
   display: flex;
   justify-content: center;
   align-items: center;
+
+  transition: background-color .1s, box-shadow .1s;
+}
+
+.cell.selected {
+  background-color: #b63636;
+  box-shadow: 0 0 10px #b63636;
 }
 
 .cell img {
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
+  position: relative;
 }
 
 .black {
