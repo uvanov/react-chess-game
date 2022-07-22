@@ -1,6 +1,11 @@
 import { Cell } from './Cell';
 import { Colors } from './Colors';
 import { Queen } from './figures/Queen';
+import { Pawn } from './figures/Pawn';
+import { King } from './figures/King';
+import { Bishop } from './figures/Bishop';
+import { Knight } from './figures/Knight';
+import { Rook } from './figures/Rook';
 
 export class Board {
   cells: Cell[][] = [];
@@ -18,5 +23,56 @@ export class Board {
       }
       this.cells.push(row);
     }
+  }
+
+  GetCell(x: number, y: number): Cell {
+    return this.cells[y][x];
+  }
+
+  AddFigures() {
+    this.AddPawns();
+    this.AddKings();
+    this.AddQueens();
+    this.AddBishops();
+    this.AddKnights();
+    this.AddRooks();
+  }
+
+  private AddPawns() {
+    for (let index = 0; index < 8; index++) {
+      new Pawn(Colors.WHITE, this.GetCell(index, 1));
+      new Pawn(Colors.BLACK, this.GetCell(index, 6));
+    }
+  }
+
+  private AddKings() {
+    new King(Colors.WHITE, this.GetCell(4, 0));
+    new King(Colors.BLACK, this.GetCell(4, 7));
+  }
+
+  private AddQueens() {
+    new Queen(Colors.WHITE, this.GetCell(3, 0));
+    new Queen(Colors.BLACK, this.GetCell(3, 7));
+  }
+
+  private AddBishops() {
+    new Bishop(Colors.WHITE, this.GetCell(2, 0));
+    new Bishop(Colors.WHITE, this.GetCell(5, 0));
+    new Bishop(Colors.BLACK, this.GetCell(2, 7));
+    new Bishop(Colors.BLACK, this.GetCell(5, 7));
+  }
+
+  private AddKnights() {
+    new Knight(Colors.WHITE, this.GetCell(1, 0));
+    new Knight(Colors.WHITE, this.GetCell(6, 0));
+    new Knight(Colors.BLACK, this.GetCell(1, 7));
+    new Knight(Colors.BLACK, this.GetCell(6, 7));
+  }
+
+  private AddRooks() {
+    new Rook(Colors.WHITE, this.GetCell(0, 0));
+    new Rook(Colors.WHITE, this.GetCell(7, 0));
+    new Rook(Colors.BLACK, this.GetCell(0, 7));
+    new Rook(Colors.BLACK, this.GetCell(7, 7));
   }
 }
