@@ -20,4 +20,12 @@ export class Cell {
     this.id = Math.random();
     this.available = false;
   }
+
+  public MoveFigure(target: Cell) {
+    if (this.figure && this.figure?.CanMove(target)) {
+      this.figure?.MoveFigure(target);
+      target.figure = this.figure;
+      this.figure = null;
+    }
+  }
 }
