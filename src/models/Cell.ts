@@ -21,11 +21,68 @@ export class Cell {
     this.available = false;
   }
 
+  public IsEmpty() {
+    return this.figure === null;
+  }
+
+  public SetFigure(figure: Figure) {
+    this.figure = figure;
+    this.figure.cell = this;
+  }
+
   public MoveFigure(target: Cell) {
     if (this.figure && this.figure?.CanMove(target)) {
-      this.figure?.MoveFigure(target);
-      target.figure = this.figure;
+      this.figure.MoveFigure(target);
+      target.SetFigure(this.figure);
       this.figure = null;
     }
+  }
+
+  public IsEmptyVertical(target: Cell): boolean {
+    if (this.x !== target.x) return false;
+
+    const min = Math.min(this.y, target.y);
+    const max = Math.max(this.y, target.y);
+
+    for (let y = min + 1; y < max; y++) {
+      if (!this.board.GetCell(this.x, y).IsEmpty()) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  public IsEmptyHorizontal(target: Cell): boolean {
+    if (this.y !== target.y) return false;
+
+    const min = Math.min(this.x, target.x);
+    const max = Math.max(this.x, target.x);
+
+    for (let x = min + 1; x < max; x++) {
+      if (!this.board.GetCell(x, this.y).IsEmpty()) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  public IsEmptyDiagonal(target: Cell): boolean {
+    const absX = Math.abs(target.x - this.x);
+    const absY = Math.abs(target.y - this.y);
+
+    if (absX !== absY)
+      return false;
+
+    const dirX = this.x < target.x ? 1 : -1;
+    const dirY = this.y < target.y ? 1 : -1;
+
+    for (let index = 1; index < absY; index++) {
+      if (!this.board.GetCell(this.x + dirX * index, this.y + dirY * index).IsEmpty()) {
+        return false;
+      }
+    }
+    return true;
   }
 }
