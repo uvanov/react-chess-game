@@ -10,14 +10,21 @@ interface CellProps {
 }
 
 const CellComponent: React.FC<CellProps> = ({ cell, selected, click }) => {
+
+  const classNames = [
+    styles.cell,
+    styles[cell.color],
+    selected ? styles.selected : '',
+    cell.available && cell.figure ? styles.availableToAttack : ''
+  ].join(' ')
+
   return (
     <div
-      className={[styles.cell, styles[cell.color], selected ? styles.selected : ''].join(' ')}
+      className={ classNames }
       onClick={ () => click(cell) }
     >
-      {
-        cell.figure?.image && <img src={ cell.figure.image } alt=""/>
-      }
+      { cell.available && !cell.figure && <div className={ styles.available }/> }
+      { cell.figure?.image && <img src={ cell.figure.image } alt=""/> }
     </div>
   );
 };
