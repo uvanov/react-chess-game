@@ -14,4 +14,11 @@ export class Bishop extends Figure {
     this.image = color === Colors.WHITE ? whiteLogo : blackLogo;
     this.name = FigureNames.BISHOP;
   }
+
+  CanMove(target: Cell): boolean {
+    if (!super.CanMove(target)) return false;
+    if (this.cell.IsEmptyDiagonal(target)) return true;
+
+    return false;
+  }
 }
