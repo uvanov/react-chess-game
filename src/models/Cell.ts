@@ -21,8 +21,16 @@ export class Cell {
     this.available = false;
   }
 
-  public IsEmpty() {
+  public IsEmpty(): boolean {
     return this.figure === null;
+  }
+
+  public IsEnemy(target: Cell): boolean {
+    if (target.figure) {
+      return this.figure?.color !== target.figure.color;
+    } else {
+      return false;
+    }
   }
 
   public SetFigure(figure: Figure) {
@@ -39,7 +47,9 @@ export class Cell {
   }
 
   public IsEmptyVertical(target: Cell): boolean {
-    if (this.x !== target.x) return false;
+    if (this.x !== target.x) {
+      return false;
+    }
 
     const min = Math.min(this.y, target.y);
     const max = Math.max(this.y, target.y);
@@ -54,7 +64,9 @@ export class Cell {
   }
 
   public IsEmptyHorizontal(target: Cell): boolean {
-    if (this.y !== target.y) return false;
+    if (this.y !== target.y) {
+      return false;
+    }
 
     const min = Math.min(this.x, target.x);
     const max = Math.max(this.x, target.x);
@@ -72,8 +84,9 @@ export class Cell {
     const absX = Math.abs(target.x - this.x);
     const absY = Math.abs(target.y - this.y);
 
-    if (absX !== absY)
+    if (absY !== absX) {
       return false;
+    }
 
     const dX = this.x < target.x ? 1 : -1;
     const dY = this.y < target.y ? 1 : -1;

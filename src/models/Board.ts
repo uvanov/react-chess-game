@@ -30,14 +30,12 @@ export class Board {
   }
 
   public HighlightCells(selectedCell: Cell | null) {
-    if(selectedCell){
-      for (let rIndex = 0; rIndex < 8; rIndex++) {
-        const row = this.cells[rIndex];
+    for (let rIndex = 0; rIndex < this.cells.length; rIndex++) {
+      const row = this.cells[rIndex];
 
-        for (let cIndex = 0; cIndex < 8; cIndex++) {
-          const target = row[cIndex];
-          target.available = !!selectedCell?.figure?.CanMove(target);
-        }
+      for (let cIndex = 0; cIndex < row.length; cIndex++) {
+        const target = row[cIndex];
+        target.available = !!selectedCell?.figure?.CanMove(target);
       }
     }
   }
