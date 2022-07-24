@@ -75,11 +75,11 @@ export class Cell {
     if (absX !== absY)
       return false;
 
-    const dirX = this.x < target.x ? 1 : -1;
-    const dirY = this.y < target.y ? 1 : -1;
+    const dX = this.x < target.x ? 1 : -1;
+    const dY = this.y < target.y ? 1 : -1;
 
     for (let index = 1; index < absY; index++) {
-      if (!this.board.GetCell(this.x + dirX * index, this.y + dirY * index).IsEmpty()) {
+      if (!this.board.GetCell(this.x + dX * index, this.y + dY * index).IsEmpty()) {
         return false;
       }
     }
