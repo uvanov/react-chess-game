@@ -41,6 +41,9 @@ export class Cell {
   public MoveFigure(target: Cell) {
     if (this.figure && this.figure?.CanMove(target)) {
       this.figure.MoveFigure(target);
+      if (target.figure) {
+        this.board.AddCapturedFigure(target.figure);
+      }
       target.SetFigure(this.figure);
       this.figure = null;
     }
