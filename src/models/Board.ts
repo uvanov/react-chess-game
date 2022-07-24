@@ -6,9 +6,12 @@ import { King } from './figures/King';
 import { Bishop } from './figures/Bishop';
 import { Knight } from './figures/Knight';
 import { Rook } from './figures/Rook';
+import { Figure } from './figures/Figure';
 
 export class Board {
   cells: Cell[][] = [];
+
+  capturedFigures: Figure[] = [];
 
   public InitCells() {
     for (let rIndex = 0; rIndex < 8; rIndex++) {
@@ -16,13 +19,17 @@ export class Board {
 
       for (let cIndex = 0; cIndex < 8; cIndex++) {
         if (( rIndex + cIndex ) % 2 !== 0) {
-          row.push(new Cell(this, cIndex, rIndex, Colors.BLACK, null)); // Black
+          row.push(new Cell(this, cIndex, rIndex, Colors.WHITE, null));
         } else {
-          row.push(new Cell(this, cIndex, rIndex, Colors.WHITE, null)); // White
+          row.push(new Cell(this, cIndex, rIndex, Colors.BLACK, null));
         }
       }
       this.cells.push(row);
     }
+  }
+
+  AddCapturedFigure(figure: Figure) {
+    this.capturedFigures.push(figure);
   }
 
   public GetCell(x: number, y: number): Cell {
@@ -43,6 +50,7 @@ export class Board {
   public GetCopyBoard(): Board {
     const copyBoard = new Board();
     copyBoard.cells = this.cells;
+    copyBoard.capturedFigures = this.capturedFigures;
     return copyBoard;
   }
 
